@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { useLogin } from "../../context/login_context";
+import { useCart } from "../../context/cart_context";
+import { useWishlist } from "../../context/wishlist_context";
 
 export const Navbar = () => {
 
     const navigate = useNavigate();
+
     const [isAccountDropdownOpen,setIsAccountDropdownOpen] = useState(false);
     const { token, loginDispatch }= useLogin();
+
+    const { cart } = useCart();
+    const { wishlist } = useWishlist();
 
     const onLoginClick = () => {
         if (!token) {
@@ -24,12 +30,36 @@ export const Navbar = () => {
                 <h1 onClick={() => navigate('/')} className="text-5xl cursor-pointer">ShopIt</h1>
             </div>
             <nav className="ml-auto flex gap-8">
-                <span onClick={() => navigate('/wishlist')} className="material-symbols-outlined hover:cursor-pointer"
-                    style={{ fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24", fontSize: '2rem' }}>
-                favorite
+                <span>
+                    <div className="relative">
+                        <span
+                        onClick={() => navigate('/wishlist')}
+                        className="material-symbols-outlined hover:cursor-pointer"
+                        style={{
+                            fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24",
+                            fontSize: '2rem'
+                        }}
+                        >
+                        favorite
+                        </span>
+                        <span style={{paddingInline:'0.3rem'}} className="absolute -top-1 -right-2 text-sm bg-slate-50 rounded-full text-green-900 font-bold">
+                        {wishlist.length}
+                        </span>
+                    </div>
                 </span>
-                <span onClick={() => navigate('/cart')} className="material-symbols-outlined hover:cursor-pointer" style={{fontSize: '2rem'}}>
-                    shopping_cart
+                <span>
+                    <div className="relative">
+                        <span
+                        onClick={() => navigate('/cart')}
+                        className="material-symbols-outlined hover:cursor-pointer"
+                        style={{ fontSize: '2rem' }}
+                        >
+                        shopping_cart
+                        </span>
+                        <span style={{paddingInline:'0.3rem'}} className="absolute -top-1 -right-2 text-sm bg-slate-50 rounded-full text-green-900 font-bold">
+                        {cart.length}
+                        </span>
+                    </div>
                 </span>
                 <div className="relative">
                     <span onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)} className="material-symbols-outlined hover:cursor-pointer" style={{fontSize: '2rem'}}>
@@ -39,8 +69,8 @@ export const Navbar = () => {
                         isAccountDropdownOpen && (
                             <div className="absolute right-0 mt-2 w-32 bg-white text-black rounded shadow-lg">
                                 <button
-                                onClick={onLoginClick}
-                                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                                onClick={onLoginClick} style={{paddingInline:'1rem',paddingBlock:'0.5rem'}}
+                                className="w-full text-green-800 font-bold text-center px-4 py-2 hover:bg-gray-100"
                                 >
                                 {token ? "Logout" : "Login"}
                                 </button>

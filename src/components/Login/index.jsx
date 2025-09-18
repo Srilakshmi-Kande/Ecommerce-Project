@@ -12,6 +12,9 @@ export const Login = () => {
     const onFormSubmit = async (e) => {
         e.preventDefault();
         const data = await userLogin(email, password);
+        if(Object.keys(data)?.length > 0){
+            localStorage.setItem('token',data.access_token)
+        }
         loginDispatch({
             type: 'TOKEN',
             payload: { token: data.access_token }

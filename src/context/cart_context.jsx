@@ -5,8 +5,10 @@ const CartContext = createContext();
 
 const CartProvider = ({children}) => {
 
+    console.log(JSON.parse(localStorage.getItem('cart')));
+
     const initialState = {
-        cart: [],
+        cart: JSON.parse(localStorage.getItem('cart')) || [],
     }
 
     const [{cart}, cartDispatch] = useReducer(cartReducer, initialState);

@@ -15,18 +15,15 @@ export const ProductCard = ({ product }) => {
     const isProductInCart = findProductInCart(cart, product.id)
     const isProductInWishlist = findProductInWishlist(wishlist, product.id)
 
-    // console.log("isProductInCart:", isProductInCart);
-    // console.log("cart:", cart);
-
-
     const onCartClick = (product) => {
         if (!isProductInCart) {
-        cartDispatch({
-            type: "ADD_TO_CART",
-            payload: { product },
-        });
+            localStorage.setItem('cart',JSON.stringify([...cart,product]))
+            cartDispatch({
+                type: "ADD_TO_CART",
+                payload: { product },
+            });
         } else {
-        navigate("/cart");
+            navigate("/cart");
         }
     };
 
@@ -36,6 +33,7 @@ export const ProductCard = ({ product }) => {
                 type: "ADD_TO_WISHLIST",
                 payload: { product },
             });
+            localStorage.setItem('wishlist',JSON.stringify([...wishlist,product]))
         }
         else{
             navigate("/wishlist")
