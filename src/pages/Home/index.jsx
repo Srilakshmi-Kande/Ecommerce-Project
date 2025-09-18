@@ -66,7 +66,7 @@ export const Home = () => {
           />
 
           <div style={{paddingTop:'2rem'}} className="flex-1 flex flex-col gap-8">
-            <div className="flex gap-4 flex-wrap">
+            <div className="flex gap-4 flex-wrap justify-center">
               {categories?.length > 0 &&
                 categories.map((category) => (
                   <div style={{paddingInline:'1rem',paddingBlock:'0.5rem'}}
